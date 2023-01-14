@@ -8,9 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var terry = Tamagotchi("Terry")
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        Form {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack() {
+                    Text(terry.getName()).font(.title)
+                }
+                Text(terry.displayInfo())
+            }
+            Section() {
+                Button("Feed \(terry.getName())", action:({
+                    terry.eatSnack()
+                }))
+            }
+        }
     }
 }
 
