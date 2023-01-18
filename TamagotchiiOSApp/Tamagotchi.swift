@@ -7,14 +7,15 @@
 
 import Foundation
 
-class Tamagotchi {
+struct Tamagotchi {
     // ATTRIBUTES
     private let name: String
     private var happiness: Int
     private var hunger: Int
     private var weight: Double
     private var age: Int
-    private var sick: Bool
+    private var isSick: Bool
+    private var isAlive: Bool
     
     // CONSTRUCTOR
     init(_ name: String) {
@@ -23,7 +24,7 @@ class Tamagotchi {
         self.hunger = 5
         self.weight = 10.0
         self.age = 0
-        self.sick = false
+        self.isSick = false
     }
     
     
@@ -40,11 +41,14 @@ class Tamagotchi {
     func getAge() -> Int {
         return self.age
     }
-    func isSick() -> Bool {
-        return self.sick
+    func isItSick() -> Bool {
+        return self.isSick
     }
     func getName() -> String {
         return self.name
+    }
+    func isItAlive() -> Bool {
+        return self.isAlive
     }
     
     func displayInfo() -> String {
@@ -56,24 +60,32 @@ Weight: \(weight)
     }
     
     // SETTERS
-    func becomeSick() {
-        sick = true
+    mutating func becomeSick() {
+        isSick = true
     }
     
-    func growUp() {
+    mutating func growUp() {
         age += 1
     }
     
-    func eatSnack() {
-        if hunger >= 3 {
-            self.hunger -= 3
+    mutating func die() {
+        isAlive = false
+    }
+    
+    mutating func checkIfAlive() {
+        i
+    }
+    
+    mutating func eatSnack() {
+        if hunger >= 2 {
+            self.hunger -= 2
         } else {
             self.hunger = 0
         }
-        if weight <= 100 {
+        if weight <= 99 {
             self.weight += 1
         } else {
-            self.weight = 99.99
+            self.weight = 100
         }
         if happiness <= 8 {
             self.happiness += 2
@@ -81,4 +93,24 @@ Weight: \(weight)
             self.happiness = 10
         }
     }
+    
+    mutating func eatMeal() {
+        if hunger >= 5 {
+            self.hunger -= 5
+        } else {
+            self.hunger = 0
+        }
+        if weight <= 98 {
+            self.weight += 2
+        } else {
+            self.weight = 100
+        }
+        if happiness <= 8 {
+            self.happiness += 2
+        } else {
+            self.happiness = 10
+        }
+    }
+    
+    
 }

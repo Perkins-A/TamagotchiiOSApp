@@ -17,11 +17,13 @@ struct ContentView: View {
                 }
                 Text(terry.displayInfo())
             }
-            Section() {
-                Button("Feed \(terry.getName())", action:({
-                    terry.eatSnack()
-                }))
-            }
+            Button("Feed \(terry.getName()) a snack", action:({
+                terry.eatSnack()
+            }))
+            Button("Feed \(terry.getName()) a meal", action:({
+                terry.eatMeal()
+            }))
+                
         }
     }
 }
