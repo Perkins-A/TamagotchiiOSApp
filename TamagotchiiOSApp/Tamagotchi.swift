@@ -25,6 +25,7 @@ struct Tamagotchi {
         self.weight = 10.0
         self.age = 0
         self.isSick = false
+        self.isAlive = true
     }
     
     
@@ -53,6 +54,7 @@ struct Tamagotchi {
     
     func displayInfo() -> String {
         return """
+Age: \(age) days
 Happiness: \(happiness)
 Hunger: \(hunger)
 Weight: \(weight)
@@ -68,12 +70,38 @@ Weight: \(weight)
         age += 1
     }
     
+    mutating func sleep() {
+        happiness += 8
+        isSick = false
+        growUp()
+        weight -= 1
+    }
+    
+    mutating func becomeUnhappy() {
+        if weight >= 69 {
+            happiness = 0
+        }
+        if isSick == true {
+            happiness -= 3
+        }
+    }
+    
     mutating func die() {
         isAlive = false
     }
     
     mutating func checkIfAlive() {
-        i
+        if weight >= 100 {
+            die()
+        } else if happiness < -5 {
+            die()
+        } else if age > 20 {
+            die()
+        } else if isSick == true {
+            die()
+        } else if hunger > 20 {
+            die()
+        }
     }
     
     mutating func eatSnack() {

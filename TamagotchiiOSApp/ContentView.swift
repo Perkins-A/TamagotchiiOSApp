@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var terry = Tamagotchi("Terry")
+    
+    
+    
     var body: some View {
         Form {
             VStack(alignment: .leading, spacing: 10) {
@@ -25,8 +28,12 @@ struct ContentView: View {
             }))
                 
         }
+        .onReceive(timer, perform) {_ in
+            terry.growUp()
+            
+        }
     }
-}
+} 
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
