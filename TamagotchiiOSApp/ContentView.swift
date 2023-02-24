@@ -10,27 +10,47 @@ import SwiftUI
 struct ContentView: View {
     @State private var terry = Tamagotchi("Terry")
     
-    
+    let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
+    @State var timeIdle = 0
     
     var body: some View {
         Form {
-            VStack(alignment: .leading, spacing: 10) {
-                HStack() {
-                    Text(terry.getName()).font(.title)
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack() {
+                        Text(terry.getName()).font(.title)
+                    }
+                    Text(terry.displayInfo())
                 }
-                Text(terry.displayInfo())
+                Button("Feed \(terry.getName()) a snack", action:{
+                    terry.eatSnack()
+                    timeIdle = 0
+                })
+                Button("Feed \(terry.getName()) a meal", action:{
+                    terry.eatMeal()
+                    timeIdle = 0
+                })
+                Button("Give \(terry.getName()) medicine", action: {
+                    terry.giveMedicine()
+                    timeIdle = 0
+                })
+                if terry.isItAlive() == false {
+                    Section{
+                        Text("\(terry.getName()) has died of \(terry.checkIfAlive())")
+                            .foregroundColor(.red)
+                    }
+                }
             }
-            Button("Feed \(terry.getName()) a snack", action:({
-                terry.eatSnack()
-            }))
-            Button("Feed \(terry.getName()) a meal", action:({
-                terry.eatMeal()
-            }))
-                
-        }
-        .onReceive(timer, perform) {_ in
-            terry.growUp()
-            
+            .onReceive(timer) { _ in
+                terry.growUp()
+                timeIdle += 1
+                terry.becomeHungry()
+                terry.checkIfAlive()
+                if timeIdle >= 3 {
+                    terry.becomeUnhappy()
+                }
+                if Int.random(in: 0..<20) == 0 {
+                    terry.becomeSick()
+                }
         }
     }
 } 

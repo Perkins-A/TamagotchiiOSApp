@@ -58,6 +58,7 @@ Age: \(age) days
 Happiness: \(happiness)
 Hunger: \(hunger)
 Weight: \(weight)
+\(isAlive)
 """
     }
     
@@ -77,30 +78,46 @@ Weight: \(weight)
         weight -= 1
     }
     
+    mutating func becomeHungry() {
+        hunger += 1
+    }
+    
     mutating func becomeUnhappy() {
         if weight >= 69 {
-            happiness = 0
+            happiness = -2
         }
         if isSick == true {
-            happiness -= 3
+            happiness -= 5
         }
+        happiness -= 1
     }
     
     mutating func die() {
         isAlive = false
     }
     
-    mutating func checkIfAlive() {
+    mutating func giveMedicine() {
+        isSick = false
+    }
+    
+    mutating func checkIfAlive() -> String {
         if weight >= 100 {
             die()
-        } else if happiness < -5 {
+            return "obesity"
+        } else if happiness <= -5 {
             die()
-        } else if age > 20 {
+            return "unhappiness"
+        } else if age >= 2 {
             die()
+            return "old age"
         } else if isSick == true {
             die()
+            return "sickness"
         } else if hunger > 20 {
             die()
+            return "hunger"
+        } else {
+            return "nothing"
         }
     }
     
